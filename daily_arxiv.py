@@ -43,6 +43,7 @@ def load_config(config_file:str) -> dict:
         return keywords
     with open(config_file,'r') as f:
         config = yaml.load(f,Loader=yaml.FullLoader)
+        print(config)
         config['kv'] = pretty_filters(**config)
         logging.info(f'config = {config}')
     return config
@@ -282,7 +283,7 @@ def json_to_md(filename,md_filename,
         pass
 
     # write data into README.md
-    with open(md_filename,"a+") as f:
+    with open(md_filename,"a+", encoding='utf-8') as f:
 
         if (use_title == True) and (to_web == True):
             f.write("---\n" + "layout: default\n" + "---\n\n")
