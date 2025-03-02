@@ -114,8 +114,7 @@ def get_daily_papers(topic,query="slam", max_results=2):
         update_time         = result.updated.date()
         comments            = result.comment
 
-        logging.info(f"Time = {update_time} title = {paper_title} author = {paper_first_author}")
-
+        logging.info(f"Time = {update_time} title = {paper_title} author = {paper_first_author} abstract = {paper_abstract}")
         # eg: 2108.09112v1 -> 2108.09112
         ver_pos = paper_id.find('v')
         if ver_pos == -1:
@@ -136,16 +135,16 @@ def get_daily_papers(topic,query="slam", max_results=2):
             #    if repo_url is None:
             #        repo_url = get_code_link(paper_key)
             if repo_url is not None:
-                content[paper_key] = "|**{}**|**{}**|{} et.al.|[{}]({})|**[link]({})**|\n".format(
-                       update_time,paper_title,paper_first_author,paper_key,paper_url,repo_url)
-                content_to_web[paper_key] = "- {}, **{}**, {} et.al., Paper: [{}]({}), Code: **[{}]({})**".format(
-                       update_time,paper_title,paper_first_author,paper_url,paper_url,repo_url,repo_url)
+                content[paper_key] = "|**{}**|**{}**|{} et.al.|[{}]({})|**[link]({})**|**{}**|\n".format(
+                       update_time,paper_title,paper_first_author,paper_key,paper_url,repo_url,paper_abstract)
+                content_to_web[paper_key] = "- {}, **{}**, {} et.al., Paper: [{}]({}), Code: **[{}]({})**, Abstract: {}\n".format(
+                       update_time,paper_title,paper_first_author,paper_url,paper_url,repo_url,repo_url, paper_abstract)
 
             else:
-                content[paper_key] = "|**{}**|**{}**|{} et.al.|[{}]({})|null|\n".format(
-                       update_time,paper_title,paper_first_author,paper_key,paper_url)
-                content_to_web[paper_key] = "- {}, **{}**, {} et.al., Paper: [{}]({})".format(
-                       update_time,paper_title,paper_first_author,paper_url,paper_url)
+                content[paper_key] = "|**{}**|**{}**|{} et.al.|[{}]({})|null|**{}**|\n".format(
+                       update_time,paper_title,paper_first_author,paper_key,paper_url,paper_abstract)
+                content_to_web[paper_key] = "- {}, **{}**, {} et.al., Paper: [{}]({}), Abstract: {}".format(
+                       update_time,paper_title,paper_first_author,paper_url,paper_url, paper_abstract)
 
             # TODO: select useful comments
             comments = None
@@ -189,9 +188,9 @@ def update_paper_links(filename):
             for paper_id,contents in v.items():
                 contents = str(contents)
 
-                update_time, paper_title, paper_first_author, paper_url, code_url = parse_arxiv_string(contents)
+                update_time, paper_title, paper_first_author, paper_url, code_url, paper_abstract = parse_arxiv_string(contents)
 
-                contents = "|{}|{}|{}|{}|{}|\n".format(update_time,paper_title,paper_first_author,paper_url,code_url)
+                contents = "|{}|{}|{}|{}|{}|{}|\n".format(update_time,paper_title,paper_first_author,paper_url,code_url, paper_abstract)
                 json_data[keywords][paper_id] = str(contents)
                 logging.info(f'paper_id = {paper_id}, contents = {contents}')
 
@@ -327,10 +326,10 @@ def json_to_md(filename,md_filename,
 
             if use_title == True :
                 if to_web == False:
-                    f.write("|Publish Date|Title|Authors|PDF|Code|\n" + "|---|---|---|---|---|\n")
+                    f.write("|Publish Date|Title|Authors|PDF|Code|Abstract|\n" + "|---|---|---|---|---|---|\n")
                 else:
-                    f.write("| Publish Date | Title | Authors | PDF | Code |\n")
-                    f.write("|:---------|:-----------------------|:---------|:------|:------|\n")
+                    f.write("| Publish Date | Title | Authors | PDF | Code | Abstract |\n")
+                    f.write("|:---------|:-----------------------|:---------|:------|:------|:------|\n")
 
             # sort papers by date
             day_content = sort_papers(day_content)

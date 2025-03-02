@@ -39,3 +39,5 @@ keywords:
     #     filters: ["NeRF"]
     "ForgeryDetection":
         filters: ["image forgery detection", "deepfake"]
+    "MLLM":
+        filters: ["MLLM", "LVM"]
