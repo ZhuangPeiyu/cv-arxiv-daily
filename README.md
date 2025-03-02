@@ -1,7 +1,7 @@
 ## Updated on 2025.03.01
 > Usage instructions: [here](./docs/README.md#usage)
 
-<details>
+<!-- <details>
   <summary>Table of Contents</summary>
   <ol>
     <li><a href=#slam>SLAM</a></li>
@@ -4318,5 +4318,5 @@
 [stars-shield]: https://img.shields.io/github/stars/Vincentqyw/cv-arxiv-daily.svg?style=for-the-badge
 [stars-url]: https://github.com/Vincentqyw/cv-arxiv-daily/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Vincentqyw/cv-arxiv-daily.svg?style=for-the-badge
-[issues-url]: https://github.com/Vincentqyw/cv-arxiv-daily/issues
+[issues-url]: https://github.com/Vincentqyw/cv-arxiv-daily/issues -->
 
